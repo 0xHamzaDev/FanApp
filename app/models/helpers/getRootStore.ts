@@ -8,5 +8,5 @@ import { RootStore, RootStoreModel } from "../RootStore"
  * @returns {RootStore} - The RootStore instance.
  */
 export const getRootStore = (self: IStateTreeNode): RootStore => {
-  return getRoot<typeof RootStoreModel>(self)
+	return getRoot<typeof RootStoreModel>(self)
 }

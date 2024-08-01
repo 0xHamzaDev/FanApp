@@ -25,17 +25,17 @@ export type ListViewProps<T> = PropsWithoutRef<FlashListProps<T>>
  * @returns {JSX.Element} The rendered `ListView` component.
  */
 const ListViewComponent = forwardRef(
-  <T,>(props: ListViewProps<T>, ref: React.ForwardedRef<ListViewRef<T>>) => {
-    const ListComponentWrapper = isRTL ? FlatList : FlashList
+	<T,>(props: ListViewProps<T>, ref: React.ForwardedRef<ListViewRef<T>>) => {
+		const ListComponentWrapper = isRTL ? FlatList : FlashList
 
-    return <ListComponentWrapper {...props} ref={ref} />
-  },
+		return <ListComponentWrapper {...props} ref={ref} />
+	},
 )
 
 ListViewComponent.displayName = "ListView"
 
 export const ListView = ListViewComponent as <T>(
-  props: ListViewProps<T> & {
-    ref?: React.RefObject<ListViewRef<T>>
-  },
+	props: ListViewProps<T> & {
+		ref?: React.RefObject<ListViewRef<T>>
+	},
 ) => React.ReactElement

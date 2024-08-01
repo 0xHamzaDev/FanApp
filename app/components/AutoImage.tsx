@@ -2,14 +2,14 @@ import React, { useLayoutEffect, useState } from "react"
 import { Image, ImageProps, ImageURISource, Platform } from "react-native"
 
 export interface AutoImageProps extends ImageProps {
-  /**
-   * How wide should the image be?
-   */
-  maxWidth?: number
-  /**
-   * How tall should the image be?
-   */
-  maxHeight?: number
+	/**
+	 * How wide should the image be?
+	 */
+	maxWidth?: number
+	/**
+	 * How tall should the image be?
+	 */
+	maxHeight?: number
 }
 
 /**
@@ -25,31 +25,31 @@ export interface AutoImageProps extends ImageProps {
  * @returns {[number, number]} - The scaled dimensions of the image.
  */
 export function useAutoImage(
-  remoteUri: string,
-  dimensions?: [maxWidth?: number, maxHeight?: number],
+	remoteUri: string,
+	dimensions?: [maxWidth?: number, maxHeight?: number],
 ): [width: number, height: number] {
-  const [[remoteWidth, remoteHeight], setRemoteImageDimensions] = useState([0, 0])
-  const remoteAspectRatio = remoteWidth / remoteHeight
-  const [maxWidth, maxHeight] = dimensions ?? []
+	const [[remoteWidth, remoteHeight], setRemoteImageDimensions] = useState([0, 0])
+	const remoteAspectRatio = remoteWidth / remoteHeight
+	const [maxWidth, maxHeight] = dimensions ?? []
 
-  useLayoutEffect(() => {
-    if (!remoteUri) return
+	useLayoutEffect(() => {
+		if (!remoteUri) return
 
-    Image.getSize(remoteUri, (w, h) => setRemoteImageDimensions([w, h]))
-  }, [remoteUri])
+		Image.getSize(remoteUri, (w, h) => setRemoteImageDimensions([w, h]))
+	}, [remoteUri])
 
-  if (Number.isNaN(remoteAspectRatio)) return [0, 0]
+	if (Number.isNaN(remoteAspectRatio)) return [0, 0]
 
-  if (maxWidth && maxHeight) {
-    const aspectRatio = Math.min(maxWidth / remoteWidth, maxHeight / remoteHeight)
-    return [remoteWidth * aspectRatio, remoteHeight * aspectRatio]
-  } else if (maxWidth) {
-    return [maxWidth, maxWidth / remoteAspectRatio]
-  } else if (maxHeight) {
-    return [maxHeight * remoteAspectRatio, maxHeight]
-  } else {
-    return [remoteWidth, remoteHeight]
-  }
+	if (maxWidth && maxHeight) {
+		const aspectRatio = Math.min(maxWidth / remoteWidth, maxHeight / remoteHeight)
+		return [remoteWidth * aspectRatio, remoteHeight * aspectRatio]
+	} else if (maxWidth) {
+		return [maxWidth, maxWidth / remoteAspectRatio]
+	} else if (maxHeight) {
+		return [maxHeight * remoteAspectRatio, maxHeight]
+	} else {
+		return [remoteWidth, remoteHeight]
+	}
 }
 
 /**
@@ -59,16 +59,16 @@ export function useAutoImage(
  * @returns {JSX.Element} The rendered `AutoImage` component.
  */
 export function AutoImage(props: AutoImageProps) {
-  const { maxWidth, maxHeight, ...ImageProps } = props
-  const source = props.source as ImageURISource
+	const { maxWidth, maxHeight, ...ImageProps } = props
+	const source = props.source as ImageURISource
 
-  const [width, height] = useAutoImage(
-    Platform.select({
-      web: (source?.uri as string) ?? (source as string),
-      default: source?.uri as string,
-    }),
-    [maxWidth, maxHeight],
-  )
+	const [width, height] = useAutoImage(
+		Platform.select({
+			web: (source?.uri as string) ?? (source as string),
+			default: source?.uri as string,
+		}),
+		[maxWidth, maxHeight],
+	)
 
-  return <Image {...ImageProps} style={[{ width, height }, props.style]} />
+	return <Image {...ImageProps} style={[{ width, height }, props.style]} />
 }
