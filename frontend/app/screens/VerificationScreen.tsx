@@ -1,10 +1,11 @@
 import { observer } from "mobx-react-lite";
 import React, { FC, useState } from "react";
 import { Image, View, Alert, Keyboard, TouchableOpacity, StyleSheet } from "react-native";
-import { Text, Button, Screen, OtpInput } from "../components";
+import { Text, Button, Screen } from "../components";
 import { AppStackScreenProps } from "../navigators";
 import { colors, spacing } from "../theme";
 import { useAuth } from "../context";
+import { OtpInput} from "react-native-otp-entry";
 
 interface VerificationScreenProps extends AppStackScreenProps<"Verification"> { }
 

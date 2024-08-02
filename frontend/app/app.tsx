@@ -103,5 +103,4 @@ export default App
 
 const $container: ViewStyle = {
 	flex: 1,
-	padding: 16,
 }
