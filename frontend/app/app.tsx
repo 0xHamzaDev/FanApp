@@ -26,12 +26,11 @@ import { useInitialRootStore } from "./models"
 import { AppNavigator, useNavigationPersistence } from "./navigators"
 import { ErrorBoundary } from "./screens/ErrorScreen/ErrorBoundary"
 import * as storage from "./utils/storage"
-import { customFontsToLoad } from "./theme"
+import { customFontsToLoad, colors } from "./theme"
 import Config from "./config"
 import { GestureHandlerRootView } from "react-native-gesture-handler"
 import { ViewStyle } from "react-native"
 import { AuthProvider } from "./context"
-import { normalize } from "./utils/responsive"
 
 export const NAVIGATION_PERSISTENCE_KEY = "NAVIGATION_STATE"
 
@@ -104,5 +103,5 @@ export default App
 
 const $container: ViewStyle = {
 	flex: 1,
-	padding: normalize(16),
+	padding: 16,
 }

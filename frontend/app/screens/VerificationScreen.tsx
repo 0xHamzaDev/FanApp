@@ -1,13 +1,9 @@
-import { observer } from "mobx-react-lite"
-import React, { FC, useState, useRef } from "react";
-import { Image, View, Alert, Keyboard, TouchableOpacity } from "react-native";
-import { Text, Button, Screen, TextField, AutoImage, Card, Icon } from "../components";
-import { isRTL, changeLanguage } from "../i18n";
-import { AppStackScreenProps, navigate } from "../navigators";
+import { observer } from "mobx-react-lite";
+import React, { FC, useState } from "react";
+import { Image, View, Alert, Keyboard, TouchableOpacity, StyleSheet } from "react-native";
+import { Text, Button, Screen, OtpInput } from "../components";
+import { AppStackScreenProps } from "../navigators";
 import { colors, spacing } from "../theme";
-import { useSafeAreaInsetsStyle } from "../utils/useSafeAreaInsetsStyle";
-import tw from 'twrnc';
-import { OtpInput } from "react-native-otp-entry";
 import { useAuth } from "../context";
 
 interface VerificationScreenProps extends AppStackScreenProps<"Verification"> { }
@@ -27,19 +23,19 @@ export const VerificationScreen: FC<VerificationScreenProps> = observer(function
 		}
 	};
 
-	const welcomeLogo = require("../../assets/images/logo.png")
+	const welcomeLogo = require("../../assets/images/logo.png");
 
 	return (
-		<Screen preset="auto" style={{ paddingVertical: spacing.xxl, paddingHorizontal: spacing.lg }} safeAreaEdges={["top", "bottom"]}>
-			<View style={tw`flex flex-col items-center justify-center mt-6`}>
-				<Image style={tw`h-22 w-full mb-10`} source={welcomeLogo} resizeMode="contain" />
+		<Screen preset="auto" style={styles.screen} safeAreaEdges={["top", "bottom"]}>
+			<View style={styles.container}>
+				<Image style={styles.logo} source={welcomeLogo} resizeMode="contain" />
 				<Text
 					tx="loginScreen.verificationTitle"
-					style={tw`text-center text-2xl font-bold mb-4`}
+					style={styles.title}
 				/>
 				<Text
 					tx="loginScreen.verificationSubTitle"
-					style={tw`text-center text-base font-normal mb-8`}
+					style={styles.subtitle}
 				/>
 				<OtpInput
 					numberOfDigits={4}
@@ -48,33 +44,90 @@ export const VerificationScreen: FC<VerificationScreenProps> = observer(function
 					onTextChange={(text) => setOtp(text)}
 					onFilled={() => {
 						handleVerification();
-						Keyboard.dismiss()
+						Keyboard.dismiss();
 					}}
 					textInputProps={{
 						accessibilityLabel: "One-Time Password",
 					}}
 					theme={{
-						pinCodeContainerStyle: tw`w-16 border-1`,
-						pinCodeTextStyle: tw`text-white`,
+						pinCodeContainerStyle: styles.otpContainer,
+						pinCodeTextStyle: styles.otpText,
 					}}
 				/>
-				<View style={tw`mt-8`}>
-					<Text style={tw`text-base text-center text-gray-400`}>
-						<Text tx="loginScreen.verificationDidNotReceiveOTP" style={tw`text-gray-400`} />
+				<View style={styles.resendContainer}>
+					<Text style={styles.resendText}>
+						<Text tx="loginScreen.verificationDidNotReceiveOTP" style={styles.resendText} />
 						<TouchableOpacity onPress={() => { Alert.alert("Resend code") }}>
-							<Text tx="loginScreen.verificationResendCode" style={tw`ml-1 mt-1 text-blue-500`} />
+							<Text tx="loginScreen.verificationResendCode" style={styles.resendLink} />
 						</TouchableOpacity>
 					</Text>
-
 				</View>
 				<Button
 					tx="loginScreen.verificationButton"
-					style={tw`mt-15 w-full bg-white`}
+					style={styles.button}
 					disabled={otp.length !== 4}
-					disabledStyle={tw`bg-[#D3D3D3]`}
+					disabledStyle={styles.buttonDisabled}
 					onPress={handleVerification}
 				/>
 			</View>
 		</Screen>
 	);
+});
+
+const styles = StyleSheet.create({
+	screen: {
+		paddingVertical: spacing.xxl,
+		paddingHorizontal: spacing.lg,
+	},
+	container: {
+		flex: 1,
+		flexDirection: 'column',
+		alignItems: 'center',
+		justifyContent: 'center',
+		marginTop: spacing.xl,
+	},
+	logo: {
+		height: 88,
+		width: '100%',
+		marginBottom: spacing.md,
+	},
+	title: {
+		textAlign: 'center',
+		fontSize: 24,
+		fontWeight: 'bold',
+		marginBottom: spacing.md,
+	},
+	subtitle: {
+		textAlign: 'center',
+		fontSize: 16,
+		color: '#A9A9A9',
+		marginBottom: spacing.lg,
+	},
+	otpContainer: {
+		width: 64,
+		borderWidth: 1,
+	},
+	otpText: {
+		color: 'white',
+	},
+	resendContainer: {
+		marginTop: spacing.md,
+	},
+	resendText: {
+		textAlign: 'center',
+		fontSize: 14,
+		color: '#A9A9A9',
+	},
+	resendLink: {
+		color: '#1E90FF',
+		marginLeft: 4,
+	},
+	button: {
+		marginTop: spacing.xl,
+		width: '100%',
+		backgroundColor: 'white',
+	},
+	buttonDisabled: {
+		backgroundColor: '#D3D3D3',
+	},
 });

@@ -7,7 +7,6 @@ import { Icon } from "../components"; // Ensure Icon component is correctly impl
 import { HomeScreen } from "../screens";
 import { colors, spacing, typography } from "../theme";
 import { AppStackParamList, AppStackScreenProps } from "./AppNavigator";
-import { normalize } from "../utils/responsive";
 
 // Define the parameter list for the bottom tab navigator
 export type AppNavigationBarParamList = {
@@ -31,7 +30,7 @@ export function AppNavigationBar() {
 			screenOptions={{
 				headerShown: false,
 				tabBarHideOnKeyboard: true,
-				tabBarStyle: [$tabBar, { height: bottom + normalize(70) }],
+				tabBarStyle: [$tabBar, { height: bottom + 70 }],
 				tabBarActiveTintColor: colors.text,
 				tabBarInactiveTintColor: colors.text,
 				tabBarLabelStyle: $tabBarLabel,
@@ -44,7 +43,7 @@ export function AppNavigationBar() {
 				options={{
 					tabBarLabel: 'Home', // Consider using translation for multi-language support
 					tabBarIcon: ({ focused }) => (
-						<Icon icon="settings" color={focused ? colors.tint : undefined} size={normalize(30)} />
+						<Icon icon="settings" color={focused ? colors.tint : undefined} size={30} />
 					),
 				}}
 			/>
@@ -56,15 +55,15 @@ export function AppNavigationBar() {
 const $tabBar: ViewStyle = {
 	backgroundColor: colors.background,
 	borderTopColor: colors.transparent,
-	padding: normalize(16),
+	padding: 16,
 };
 
 const $tabBarItem: ViewStyle = {
-	paddingTop: normalize(16),
+	paddingTop: 16,
 };
 
 const $tabBarLabel: TextStyle = {
-	fontSize: normalize(12),
+	fontSize: 12,
 	fontFamily: typography.primary.medium,
-	lineHeight: normalize(16),
+	lineHeight: 16,
 };

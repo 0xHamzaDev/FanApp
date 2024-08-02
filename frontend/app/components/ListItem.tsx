@@ -10,7 +10,6 @@ import {
 import { colors, spacing } from "../theme"
 import { Icon, IconTypes } from "./Icon"
 import { Text, TextProps } from "./Text"
-import { normalize } from '../utils/responsive';
 
 export interface ListItemProps extends TouchableOpacityProps {
 	/**
@@ -191,7 +190,6 @@ function ListItemAction(props: ListItemActionProps) {
 
 	return null
 }
-
 const $separatorTop: ViewStyle = {
 	borderTopWidth: 1,
 	borderTopColor: colors.separator,
@@ -203,7 +201,7 @@ const $separatorBottom: ViewStyle = {
 }
 
 const $textStyle: TextStyle = {
-	paddingVertical: normalize(spacing.xs),
+	paddingVertical: spacing.xs,
 	alignSelf: "center",
 	flexGrow: 1,
 	flexShrink: 1,
@@ -220,9 +218,9 @@ const $iconContainer: ViewStyle = {
 	flexGrow: 0,
 }
 const $iconContainerLeft: ViewStyle = {
-	marginEnd: normalize(spacing.md),
+	marginEnd: spacing.md,
 }
 
 const $iconContainerRight: ViewStyle = {
-	marginStart: normalize(spacing.md),
+	marginStart: spacing.md,
 }

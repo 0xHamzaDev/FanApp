@@ -1,8 +1,7 @@
 import React, { ErrorInfo } from "react"
 import { ScrollView, TextStyle, View, ViewStyle } from "react-native"
 import { Button, Icon, Screen, Text } from "../../components"
-import { colors, spacing } from "../../theme"
-import { normalize } from "../../utils/responsive"
+import { colors } from "../../theme"
 
 export interface ErrorDetailsProps {
 	error: Error
@@ -49,8 +48,8 @@ export function ErrorDetails(props: ErrorDetailsProps) {
 
 const $contentContainer: ViewStyle = {
 	alignItems: "center",
-	paddingHorizontal: normalize(24),
-	paddingTop: normalize(32),
+	paddingHorizontal: 24,
+	paddingTop: 32,
 	flex: 1,
 }
 
@@ -61,18 +60,18 @@ const $topSection: ViewStyle = {
 
 const $heading: TextStyle = {
 	color: colors.error,
-	marginBottom: normalize(16),
+	marginBottom: 16,
 }
 
 const $errorSection: ViewStyle = {
 	flex: 2,
 	backgroundColor: colors.separator,
-	marginVertical: normalize(16),
-	borderRadius: normalize(6),
+	marginVertical: 16,
+	borderRadius: 6,
 }
 
 const $errorSectionContentContainer: ViewStyle = {
-	padding: normalize(16),
+	padding: 16,
 }
 
 const $errorContent: TextStyle = {
@@ -80,11 +79,11 @@ const $errorContent: TextStyle = {
 }
 
 const $errorBacktrace: TextStyle = {
-	marginTop: normalize(16),
+	marginTop: 16,
 	color: colors.textDim,
 }
 
 const $resetButton: ViewStyle = {
 	backgroundColor: colors.error,
-	paddingHorizontal: normalize(48),
+	paddingHorizontal: 48,
 }

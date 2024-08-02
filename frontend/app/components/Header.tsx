@@ -12,7 +12,6 @@ import { colors, spacing } from "../theme"
 import { ExtendedEdge, useSafeAreaInsetsStyle } from "../utils/useSafeAreaInsetsStyle"
 import { Icon, IconTypes } from "./Icon"
 import { Text, TextProps } from "./Text"
-import { normalize } from "../utils/responsive"
 
 export interface HeaderProps {
 	/**
@@ -263,8 +262,9 @@ function HeaderAction(props: HeaderActionProps) {
 	return <View style={[$actionFillerContainer, { backgroundColor }]} />
 }
 
+
 const $wrapper: ViewStyle = {
-	height: normalize(56),
+	height: 56,
 	flexDirection: "row",
 	alignItems: "center",
 	justifyContent: "space-between",
@@ -283,7 +283,7 @@ const $actionTextContainer: ViewStyle = {
 	alignItems: "center",
 	justifyContent: "center",
 	height: "100%",
-	paddingHorizontal: normalize(16),
+	paddingHorizontal: spacing.md,
 	zIndex: 2,
 }
 
@@ -296,12 +296,12 @@ const $actionIconContainer: ViewStyle = {
 	alignItems: "center",
 	justifyContent: "center",
 	height: "100%",
-	paddingHorizontal: normalize(16),
+	paddingHorizontal: spacing.md,
 	zIndex: 2,
 }
 
 const $actionFillerContainer: ViewStyle = {
-	width: normalize(16),
+	width: 16,
 }
 
 const $titleWrapperCenter: ViewStyle = {
@@ -310,7 +310,7 @@ const $titleWrapperCenter: ViewStyle = {
 	height: "100%",
 	width: "100%",
 	position: "absolute",
-	paddingHorizontal: normalize(32),
+	paddingHorizontal: spacing.xxl,
 	zIndex: 1,
 }
 

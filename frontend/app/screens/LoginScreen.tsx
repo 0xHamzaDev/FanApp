@@ -1,10 +1,9 @@
 import { observer } from "mobx-react-lite";
 import React, { FC, useState } from "react";
-import { Image, View, Alert } from "react-native";
+import { Image, View, Alert, StyleSheet } from "react-native";
 import { Text, Button, Screen, TextField } from "../components";
 import { AppStackScreenProps } from "../navigators";
 import { colors, spacing } from "../theme";
-import tw from 'twrnc';
 
 interface LoginScreenProps extends AppStackScreenProps<"Login"> { }
 
@@ -27,12 +26,12 @@ export const LoginScreen: FC<LoginScreenProps> = observer(function LoginScreen(_
 	};
 
 	return (
-		<Screen preset="auto" style={tw`py-[${spacing.xxl}px] px-[${spacing.lg}px]`} safeAreaEdges={["top", "bottom"]}>
-			<View style={tw`flex flex-col items-center justify-center mt-[${spacing.xl}px]`}>
-				<Image style={tw`h-[88px] w-full mb-[${spacing.md}px]`} source={welcomeLogo} resizeMode="contain" />
+		<Screen preset="auto" style={styles.screen} safeAreaEdges={["top", "bottom"]}>
+			<View style={styles.container}>
+				<Image style={styles.logo} source={welcomeLogo} resizeMode="contain" />
 				<Text
 					tx="loginScreen.signIn"
-					style={tw`text-center text-[24px] font-bold`}
+					style={styles.title}
 				/>
 				<TextField
 					placeholderTx="loginScreen.phoneNumberFieldPlaceholder"
@@ -40,21 +39,63 @@ export const LoginScreen: FC<LoginScreenProps> = observer(function LoginScreen(_
 					onChangeText={setAuthNumber}
 					keyboardType="number-pad"
 					placeholderTextColor={'#FFF'}
-					style={tw`p-[${spacing.sm}px]`}
+					style={styles.textField}
 					maxLength={10}
 					helper={error}
 					status={error ? "error" : undefined}
-					containerStyle={tw`mb-[${spacing.md}px] mt-[${spacing.lg}px]`}
+					containerStyle={styles.textFieldContainer}
 				/>
 				<Button
 					tx="loginScreen.signIn"
 					onPress={handleLogin}
 					disabled={authNumber.length < 10}
-					style={tw`mt-[${spacing.xl}px] w-full bg-white`}
-					textStyle={{ color: colors.background }}
-					disabledStyle={tw`bg-[#D3D3D3]`}
+					style={styles.button}
+					textStyle={styles.buttonText}
+					disabledStyle={styles.buttonDisabled}
 				/>
 			</View>
 		</Screen>
 	);
+});
+
+const styles = StyleSheet.create({
+	screen: {
+		paddingVertical: spacing.xxl,
+		paddingHorizontal: spacing.lg,
+	},
+	container: {
+		flex: 1,
+		flexDirection: 'column',
+		alignItems: 'center',
+		justifyContent: 'center',
+		marginTop: spacing.xl,
+	},
+	logo: {
+		height: 88,
+		width: '100%',
+		marginBottom: spacing.md,
+	},
+	title: {
+		textAlign: 'center',
+		fontSize: 24,
+		fontWeight: 'bold',
+	},
+	textField: {
+		padding: spacing.sm,
+	},
+	textFieldContainer: {
+		marginBottom: spacing.md,
+		marginTop: spacing.lg,
+	},
+	button: {
+		marginTop: spacing.xl,
+		width: '100%',
+		backgroundColor: 'white',
+	},
+	buttonText: {
+		color: colors.background,
+	},
+	buttonDisabled: {
+		backgroundColor: '#D3D3D3',
+	},
 });

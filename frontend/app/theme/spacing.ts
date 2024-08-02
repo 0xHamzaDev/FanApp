@@ -1,18 +1,16 @@
 /**
 	Use these spacings for margins/paddings and other whitespace throughout your app.
  */
-import { normalize } from '../utils/responsive';
-
 export const spacing = {
-	xxxs: normalize(2),
-	xxs: normalize(4),
-	xs: normalize(8),
-	sm: normalize(12),
-	md: normalize(16),
-	lg: normalize(24),
-	xl: normalize(32),
-	xxl: normalize(48),
-	xxxl: normalize(64),
+	xxxs: 2,
+	xxs: 4,
+	xs: 8,
+	sm: 12,
+	md: 16,
+	lg: 24,
+	xl: 32,
+	xxl: 48,
+	xxxl: 64,
 } as const
 
 export type Spacing = keyof typeof spacing

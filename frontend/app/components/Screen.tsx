@@ -14,7 +14,6 @@ import {
 } from "react-native"
 import { colors } from "../theme"
 import { ExtendedEdge, useSafeAreaInsetsStyle } from "../utils/useSafeAreaInsetsStyle"
-import { normalize } from "../utils/responsive"
 
 interface BaseScreenProps {
 	/**
@@ -260,25 +259,21 @@ export function Screen(props: ScreenProps) {
 
 const $containerStyle: ViewStyle = {
 	flex: 1,
-	height: '100%',
-	width: '100%',
-	padding: normalize(16),
+	height: "100%",
+	width: "100%",
 }
 
 const $keyboardAvoidingViewStyle: ViewStyle = {
 	flex: 1,
-	padding: normalize(16),
 }
 
 const $outerStyle: ViewStyle = {
 	flex: 1,
-	height: '100%',
-	width: '100%',
-	padding: normalize(16),
+	height: "100%",
+	width: "100%",
 }
 
 const $innerStyle: ViewStyle = {
-	justifyContent: 'flex-start',
-	alignItems: 'stretch',
-	padding: normalize(16),
+	justifyContent: "flex-start",
+	alignItems: "stretch",
 }

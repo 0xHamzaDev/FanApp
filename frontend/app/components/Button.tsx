@@ -9,7 +9,6 @@ import {
 } from "react-native"
 import { colors, spacing, typography } from "../theme"
 import { Text, TextProps } from "./Text"
-import { normalize } from '../utils/responsive';
 
 type Presets = keyof typeof $viewPresets
 
@@ -175,21 +174,21 @@ export function Button(props: ButtonProps) {
 
 // back
 
+
 const $baseViewStyle: ViewStyle = {
-	minHeight: normalize(56),
-	borderRadius: normalize(12),
+	minHeight: 56,
+	borderRadius: 4,
 	justifyContent: "center",
 	alignItems: "center",
 	flexDirection: "row",
-	paddingVertical: normalize(12),
-	paddingHorizontal: normalize(12),
+	paddingVertical: spacing.sm,
+	paddingHorizontal: spacing.sm,
 	overflow: "hidden",
 }
 
 const $baseTextStyle: TextStyle = {
-	fontSize: normalize(16),
-	lineHeight: normalize(20),
-	color: colors.background,
+	fontSize: 16,
+	lineHeight: 20,
 	fontFamily: typography.primary.medium,
 	textAlign: "center",
 	flexShrink: 1,
@@ -197,8 +196,8 @@ const $baseTextStyle: TextStyle = {
 	zIndex: 2,
 }
 
-const $rightAccessoryStyle: ViewStyle = { marginStart: normalize(8), zIndex: 1 }
-const $leftAccessoryStyle: ViewStyle = { marginEnd: normalize(8), zIndex: 1 }
+const $rightAccessoryStyle: ViewStyle = { marginStart: spacing.xs, zIndex: 1 }
+const $leftAccessoryStyle: ViewStyle = { marginEnd: spacing.xs, zIndex: 1 }
 
 const $viewPresets = {
 	default: [

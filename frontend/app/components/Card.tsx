@@ -10,7 +10,6 @@ import {
 } from "react-native"
 import { colors, spacing } from "../theme"
 import { Text, TextProps } from "./Text"
-import { normalize } from '../utils/responsive';
 
 type Presets = keyof typeof $containerPresets
 
@@ -245,28 +244,28 @@ export function Card(props: CardProps) {
 }
 
 const $containerBase: ViewStyle = {
-	borderRadius: normalize(12),
-	padding: normalize(8),
+	borderRadius: spacing.md,
+	padding: spacing.xs,
 	borderWidth: 1,
 	shadowColor: colors.palette.neutral800,
-	shadowOffset: { width: 0, height: normalize(12) },
+	shadowOffset: { width: 0, height: 12 },
 	shadowOpacity: 0.08,
-	shadowRadius: normalize(12.81),
+	shadowRadius: 12.81,
 	elevation: 16,
-	minHeight: normalize(96),
-	flexDirection: 'row',
+	minHeight: 96,
+	flexDirection: "row",
 }
 
 const $alignmentWrapper: ViewStyle = {
 	flex: 1,
-	alignSelf: 'stretch',
+	alignSelf: "stretch",
 }
 
 const $alignmentWrapperFlexOptions = {
-	top: 'flex-start',
-	center: 'center',
-	'space-between': 'space-between',
-	'force-footer-bottom': 'space-between',
+	top: "flex-start",
+	center: "center",
+	"space-between": "space-between",
+	"force-footer-bottom": "space-between",
 } as const
 
 const $containerPresets = {

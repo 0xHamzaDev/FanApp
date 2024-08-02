@@ -10,7 +10,6 @@ import {
 	ViewProps,
 	ViewStyle,
 } from "react-native"
-import { normalize } from '../utils/responsive';
 
 export type IconTypes = keyof typeof iconRegistry
 
@@ -105,6 +104,6 @@ export const iconRegistry = {
 
 const $imageStyleBase: ImageStyle = {
 	resizeMode: "contain",
-	width: normalize(24),
-	height: normalize(24),
+	width: 24,
+	height: 24,
 }

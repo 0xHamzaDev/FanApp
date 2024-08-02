@@ -11,7 +11,6 @@ import {
 import { isRTL, translate } from "../i18n"
 import { colors, spacing, typography } from "../theme"
 import { Text, TextProps } from "./Text"
-import { normalize } from '../utils/responsive';
 
 export interface TextFieldAccessoryProps {
 	style: StyleProp<any>
@@ -140,7 +139,7 @@ export const TextField = forwardRef(function TextField(props: TextFieldProps, re
 	const $inputWrapperStyles = [
 		$inputWrapperStyle,
 		status === "error" && { borderColor: colors.error },
-		TextInputProps.multiline && { minHeight: normalize(112) },
+		TextInputProps.multiline && { minHeight: 112 },
 		LeftAccessory && { paddingStart: 0 },
 		RightAccessory && { paddingEnd: 0 },
 		$inputWrapperStyleOverride,
@@ -235,14 +234,14 @@ export const TextField = forwardRef(function TextField(props: TextFieldProps, re
 })
 
 const $labelStyle: TextStyle = {
-	marginBottom: normalize(8),
+	marginBottom: spacing.xs,
 }
 
 const $inputWrapperStyle: ViewStyle = {
 	flexDirection: "row",
 	alignItems: "flex-start",
 	borderWidth: 1,
-	borderRadius: normalize(12),
+	borderRadius: 12,
 	width: "100%",
 	borderColor: colors.text,
 	overflow: "hidden",
@@ -253,27 +252,28 @@ const $inputStyle: TextStyle = {
 	alignSelf: "stretch",
 	fontFamily: typography.primary.normal,
 	color: colors.text,
-	fontSize: normalize(16),
+	fontSize: 16,
 	height: "fit-content",
 	paddingVertical: 0,
 	paddingHorizontal: 0,
-	marginVertical: normalize(8),
-	marginHorizontal: normalize(12),
+	marginVertical: 8,
+	marginHorizontal: 12,
 }
 
+
 const $helperStyle: TextStyle = {
-	marginTop: normalize(8),
+	marginTop: spacing.xs,
 }
 
 const $rightAccessoryStyle: ViewStyle = {
-	marginEnd: normalize(8),
-	height: normalize(40),
+	marginEnd: spacing.xs,
+	height: 40,
 	justifyContent: "center",
 	alignItems: "center",
 }
 const $leftAccessoryStyle: ViewStyle = {
-	marginStart: normalize(8),
-	height: normalize(40),
+	marginStart: spacing.xs,
+	height: 40,
 	justifyContent: "center",
 	alignItems: "center",
 }
