@@ -13,10 +13,10 @@ require("ts-node/register")
  * https://docs.expo.dev/workflow/configuration/#configuration-resolution-rules
  */
 module.exports = ({ config }: ConfigContext): Partial<ExpoConfig> => {
-  const existingPlugins = config.plugins ?? []
+	const existingPlugins = config.plugins ?? []
 
-  return {
-    ...config,
-    plugins: [...existingPlugins, require("./plugins/withSplashScreen").withSplashScreen],
-  }
+	return {
+		...config,
+		plugins: [...existingPlugins, require("./plugins/withSplashScreen").withSplashScreen],
+	}
 }
