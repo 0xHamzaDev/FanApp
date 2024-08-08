@@ -76,7 +76,6 @@ export const AuthProvider = ({ children }) => {
 	);
 
 	if (state.isLoading) {
-		console.log('Splash Screen');
 		return null;
 	}
 

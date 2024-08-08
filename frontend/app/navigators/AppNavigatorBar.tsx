@@ -3,14 +3,18 @@ import { CompositeScreenProps } from "@react-navigation/native";
 import React from "react";
 import { TextStyle, ViewStyle } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { Icon } from "../components"; // Ensure Icon component is correctly implemented
-import { HomeScreen } from "../screens";
-import { colors, spacing, typography } from "../theme";
+import { Icon, CustomTabBar } from "../components"; // Ensure Icon component is correctly implemented
+import * as Screens from "../screens";
+import { colors, typography } from "../theme";
 import { AppStackParamList, AppStackScreenProps } from "./AppNavigator";
 
 // Define the parameter list for the bottom tab navigator
 export type AppNavigationBarParamList = {
-	home1: undefined;
+	home: undefined;
+	notifications: undefined;
+	map: undefined;
+	settings: undefined;
+	profile: undefined;
 };
 
 // Define the type for screen props, integrating with AppStackScreenProps
@@ -27,26 +31,17 @@ export function AppNavigationBar() {
 
 	return (
 		<Tab.Navigator
+			initialRouteName="home"
+			tabBar={props => <CustomTabBar {...props} />}
 			screenOptions={{
 				headerShown: false,
-				tabBarHideOnKeyboard: true,
-				tabBarStyle: [$tabBar, { height: bottom + 70 }],
-				tabBarActiveTintColor: colors.text,
-				tabBarInactiveTintColor: colors.text,
-				tabBarLabelStyle: $tabBarLabel,
-				tabBarItemStyle: $tabBarItem,
 			}}
 		>
-			<Tab.Screen
-				name="home1"
-				component={HomeScreen}
-				options={{
-					tabBarLabel: 'Home', // Consider using translation for multi-language support
-					tabBarIcon: ({ focused }) => (
-						<Icon icon="settings" color={focused ? colors.tint : undefined} size={30} />
-					),
-				}}
-			/>
+			<Tab.Screen name="profile" component={Screens.ProfileScreen} options={{ title: 'حسابي', tabBarLabel: 'person-circle' }} />
+			<Tab.Screen name="settings" component={Screens.SettingsScreen} options={{ title: 'الإعدادات', tabBarLabel: 'settings' }} />
+			<Tab.Screen name="map" component={Screens.MapScreen} options={{ title: 'الخريطة', tabBarLabel: 'map' }} />
+			<Tab.Screen name="notifications" component={Screens.NotificationsScreen} options={{ title: 'الاشعارات', tabBarLabel: 'notifications' }} />
+			<Tab.Screen name="home" component={Screens.HomeScreen} options={{ title: 'الرئيسية', tabBarLabel: 'home' }} />
 		</Tab.Navigator>
 	);
 }
@@ -55,15 +50,4 @@ export function AppNavigationBar() {
 const $tabBar: ViewStyle = {
 	backgroundColor: colors.background,
 	borderTopColor: colors.transparent,
-	padding: 16,
-};
-
-const $tabBarItem: ViewStyle = {
-	paddingTop: 16,
-};
-
-const $tabBarLabel: TextStyle = {
-	fontSize: 12,
-	fontFamily: typography.primary.medium,
-	lineHeight: 16,
 };

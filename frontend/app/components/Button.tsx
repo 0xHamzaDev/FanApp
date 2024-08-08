@@ -220,7 +220,7 @@ const $viewPresets = {
 const $textPresets: Record<Presets, StyleProp<TextStyle>> = {
 	default: $baseTextStyle,
 	filled: $baseTextStyle,
-	reversed: [$baseTextStyle, { color: colors.palette.neutral100 }],
+	reversed: [$baseTextStyle],
 }
 
 const $pressedViewPresets: Record<Presets, StyleProp<ViewStyle>> = {

@@ -15,10 +15,15 @@
 			"fallbackToCacheTimeout": 0
 		},
 		"jsEngine": "hermes",
-		"assetBundlePatterns": ["**/*"],
+		"assetBundlePatterns": [
+			"**/*"
+		],
 		"android": {
 			"icon": "./assets/images/app-icon-android-legacy.png",
 			"package": "com.frontend",
+			"permissions": [
+				"ACCESS_FINE_LOCATION"
+			],
 			"adaptiveIcon": {
 				"foregroundImage": "./assets/images/app-icon-android-adaptive-foreground.png",
 				"backgroundImage": "./assets/images/app-icon-android-adaptive-background.png"
@@ -33,6 +38,9 @@
 			"icon": "./assets/images/app-icon-ios.png",
 			"supportsTablet": true,
 			"bundleIdentifier": "com.frontend",
+			"infoPlist": {
+				"NSLocationWhenInUseUsageDescription": "We need your location to show you nearby points of interest."
+			},
 			"splash": {
 				"image": "./assets/images/splash-logo-ios-mobile.png",
 				"tabletImage": "./assets/images/splash-logo-ios-tablet.png",
@@ -51,6 +59,20 @@
 		},
 		"plugins": [
 			"expo-localization",
+			[
+				"expo-location",
+				{
+					"locationWhenInUsePermission": "Show current location on map."
+				}
+			],
+			[
+				"@rnmapbox/maps",
+				{
+					"RNMapboxMapsVersion": "11.0.0",
+					"RNMapboxMapsDownloadToken": "sk.eyJ1IjoiaGFtemFhbHNoZXJpZiIsImEiOiJjbHprc2xiaTcxNjh5MmtzaTN3eTBnaW91In0.tlLesVUSxEZeSoHbh_vEqw",
+					"RNMapboxMapsAccessToken": "sk.eyJ1IjoiaGFtemFhbHNoZXJpZiIsImEiOiJjbHprc2xiaTcxNjh5MmtzaTN3eTBnaW91In0.tlLesVUSxEZeSoHbh_vEqw"
+				}
+			],
 			[
 				"expo-build-properties",
 				{

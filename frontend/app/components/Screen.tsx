@@ -68,6 +68,10 @@ interface ScrollScreenProps extends BaseScreenProps {
 	 * Pass any additional props directly to the ScrollView component.
 	 */
 	ScrollViewProps?: ScrollViewProps
+	/**
+	 * Disable bounces in ScrollView.
+	*/
+	bounces?: boolean
 }
 
 interface AutoScreenProps extends Omit<ScrollScreenProps, "preset"> {
@@ -77,6 +81,10 @@ interface AutoScreenProps extends Omit<ScrollScreenProps, "preset"> {
 	 * Defaults to `{ percent: 0.92 }`.
 	 */
 	scrollEnabledToggleThreshold?: { percent?: number; point?: number }
+	/**
+		* Disable bounces in ScrollView.
+	*/
+	bounces?: boolean
 }
 
 export type ScreenProps = ScrollScreenProps | FixedScreenProps | AutoScreenProps
@@ -211,6 +219,7 @@ function ScreenWithScrolling(props: ScreenProps) {
 				ScrollViewProps?.contentContainerStyle,
 				contentContainerStyle,
 			]}
+			bounces={props.bounces ?? true}
 		>
 			{children}
 		</ScrollView>

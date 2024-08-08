@@ -5,9 +5,9 @@ import { Text, Button, Screen, TextField } from "../components";
 import { AppStackScreenProps } from "../navigators";
 import { colors, spacing } from "../theme";
 
-interface LoginScreenProps extends AppStackScreenProps<"Login"> { }
+interface SignupScreenProps extends AppStackScreenProps<"Signup"> { }
 
-export const LoginScreen: FC<LoginScreenProps> = observer(function LoginScreen(_props) {
+export const SignupScreen: FC<SignupScreenProps> = observer(function SignupScreen(_props) {
 	const { navigation } = _props;
 	const welcomeLogo = require("../../assets/images/logo.png");
 	const [isSubmitted, setIsSubmitted] = useState(false);
