@@ -10,14 +10,13 @@ import React from "react";
 import { useColorScheme } from "react-native";
 import * as Screens from "../screens";
 import Config from "../config";
-import { useStores } from "../models";
+import { useAuth } from "../context";
 import { AppNavigationBar, AppNavigationBarParamList } from "./AppNavigatorBar";
 import { navigationRef, useBackButtonHandler } from "./navigationUtilities";
 import { colors } from "../theme";
 
 export type AppStackParamList = {
 	// Auth Navigator
-	Welcome: undefined;
 	Login: undefined;
 	Signup: undefined;
 	Verification: undefined;
@@ -37,14 +36,13 @@ const MainStack = createNativeStackNavigator<AppStackParamList>();
 const AuthNavigator = observer(() => {
 	return (
 		<AuthStack.Navigator
-			initialRouteName="Welcome"
+			initialRouteName="Login"
 			screenOptions={{
 				headerShown: false,
 				gestureEnabled: false,
 				navigationBarColor: colors.background,
 			}}
 		>
-			<AuthStack.Screen name="Welcome" component={Screens.WelcomeScreen} />
 			<AuthStack.Screen name="Login" component={Screens.LoginScreen} />
 			<AuthStack.Screen name="Signup" component={Screens.SignupScreen} />
 			<AuthStack.Screen name="Verification" component={Screens.VerificationScreen} />
@@ -71,8 +69,7 @@ const MainNavigator = observer(() => (
 
 export const AppNavigator = observer(function AppNavigator(props) {
 	const colorScheme = useColorScheme();
-	const { authenticationStore } = useStores();
-	const isAuthenticated = authenticationStore.isAuthenticated;
+	const { isAuthenticated } = useAuth();
 
 	useBackButtonHandler((routeName) => exitRoutes.includes(routeName));
 

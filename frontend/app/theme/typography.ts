@@ -16,6 +16,9 @@ export const customFontsToLoad = {
 	spaceGroteskMedium,
 	spaceGroteskSemiBold,
 	spaceGroteskBold,
+	'JannaBold': require('../../assets/fonts/Janna2-Bold.ttf'),
+	'JannaMed': require('../../assets/fonts/Janna2-Medium.ttf'),
+	'Janna': require('../../assets/fonts/Janna2-Regular.ttf'),
 }
 
 const fonts = {

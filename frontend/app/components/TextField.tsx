@@ -1,108 +1,45 @@
 import React, { ComponentType, forwardRef, Ref, useImperativeHandle, useRef } from "react"
 import {
-	StyleProp,
+	StyleSheet,
 	TextInput,
 	TextInputProps,
-	TextStyle,
 	TouchableOpacity,
 	View,
-	ViewStyle,
+	I18nManager
 } from "react-native"
-import { isRTL, translate } from "../i18n"
+import { translate } from "../i18n"
 import { colors, spacing, typography } from "../theme"
 import { Text, TextProps } from "./Text"
 
+const isRTL = I18nManager.isRTL;
+
 export interface TextFieldAccessoryProps {
-	style: StyleProp<any>
+	style: any
 	status: TextFieldProps["status"]
 	multiline: boolean
 	editable: boolean
 }
 
 export interface TextFieldProps extends Omit<TextInputProps, "ref"> {
-	/**
-	 * A style modifier for different input states.
-	 */
 	status?: "error" | "disabled"
-	/**
-	 * The label text to display if not using `labelTx`.
-	 */
 	label?: TextProps["text"]
-	/**
-	 * Label text which is looked up via i18n.
-	 */
 	labelTx?: TextProps["tx"]
-	/**
-	 * Optional label options to pass to i18n. Useful for interpolation
-	 * as well as explicitly setting locale or translation fallbacks.
-	 */
 	labelTxOptions?: TextProps["txOptions"]
-	/**
-	 * Pass any additional props directly to the label Text component.
-	 */
 	LabelTextProps?: TextProps
-	/**
-	 * The helper text to display if not using `helperTx`.
-	 */
 	helper?: TextProps["text"]
-	/**
-	 * Helper text which is looked up via i18n.
-	 */
 	helperTx?: TextProps["tx"]
-	/**
-	 * Optional helper options to pass to i18n. Useful for interpolation
-	 * as well as explicitly setting locale or translation fallbacks.
-	 */
 	helperTxOptions?: TextProps["txOptions"]
-	/**
-	 * Pass any additional props directly to the helper Text component.
-	 */
 	HelperTextProps?: TextProps
-	/**
-	 * The placeholder text to display if not using `placeholderTx`.
-	 */
 	placeholder?: TextProps["text"]
-	/**
-	 * Placeholder text which is looked up via i18n.
-	 */
 	placeholderTx?: TextProps["tx"]
-	/**
-	 * Optional placeholder options to pass to i18n. Useful for interpolation
-	 * as well as explicitly setting locale or translation fallbacks.
-	 */
 	placeholderTxOptions?: TextProps["txOptions"]
-	/**
-	 * Optional input style override.
-	 */
-	style?: StyleProp<TextStyle>
-	/**
-	 * Style overrides for the container
-	 */
-	containerStyle?: StyleProp<ViewStyle>
-	/**
-	 * Style overrides for the input wrapper
-	 */
-	inputWrapperStyle?: StyleProp<ViewStyle>
-	/**
-	 * An optional component to render on the right side of the input.
-	 * Example: `RightAccessory={(props) => <Icon icon="ladybug" containerStyle={props.style} color={props.editable ? colors.textDim : colors.text} />}`
-	 * Note: It is a good idea to memoize this.
-	 */
+	style?: any
+	containerStyle?: any
+	inputWrapperStyle?: any
 	RightAccessory?: ComponentType<TextFieldAccessoryProps>
-	/**
-	 * An optional component to render on the left side of the input.
-	 * Example: `LeftAccessory={(props) => <Icon icon="ladybug" containerStyle={props.style} color={props.editable ? colors.textDim : colors.text} />}`
-	 * Note: It is a good idea to memoize this.
-	 */
 	LeftAccessory?: ComponentType<TextFieldAccessoryProps>
 }
 
-/**
- * A component that allows for the entering and editing of text.
- * @see [Documentation and Examples]{@link https://docs.infinite.red/ignite-cli/boilerplate/components/TextField/}
- * @param {TextFieldProps} props - The props for the `TextField` component.
- * @returns {JSX.Element} The rendered `TextField` component.
- */
 export const TextField = forwardRef(function TextField(props: TextFieldProps, ref: Ref<TextInput>) {
 	const {
 		labelTx,
@@ -132,92 +69,94 @@ export const TextField = forwardRef(function TextField(props: TextFieldProps, re
 		? translate(placeholderTx, placeholderTxOptions)
 		: placeholder
 
-	const $containerStyles = [$containerStyleOverride]
+	const $containerStyles = [styles.container, $containerStyleOverride]
 
-	const $labelStyles = [$labelStyle, LabelTextProps?.style]
+	const $labelStyles = [
+		styles.label,
+		LabelTextProps?.style,
+		isRTL && { textAlign: "right" },
+	]
 
 	const $inputWrapperStyles = [
-		$inputWrapperStyle,
+		styles.inputWrapper,
 		status === "error" && { borderColor: colors.error },
-		TextInputProps.multiline && { minHeight: 112 },
-		LeftAccessory && { paddingStart: 0 },
-		RightAccessory && { paddingEnd: 0 },
 		$inputWrapperStyleOverride,
 	]
 
-	const $inputStyles: StyleProp<TextStyle> = [
-		$inputStyle,
+	const $inputStyles = [
+		styles.input,
 		disabled && { color: colors.textDim },
-		isRTL && { textAlign: "right" as TextStyle["textAlign"] },
+		isRTL && { textAlign: "right" },
 		TextInputProps.multiline && { height: "auto" },
 		$inputStyleOverride,
 	]
 
 	const $helperStyles = [
-		$helperStyle,
+		styles.helper,
 		status === "error" && { color: colors.error },
 		HelperTextProps?.style,
 	]
 
-	/**
-	 *
-	 */
 	function focusInput() {
 		if (disabled) return
-
 		input.current?.focus()
 	}
 
 	useImperativeHandle(ref, () => input.current as TextInput)
 
 	return (
-		<TouchableOpacity
-			activeOpacity={1}
-			style={$containerStyles}
-			onPress={focusInput}
-			accessibilityState={{ disabled }}
-		>
-			{!!(label || labelTx) && (
-				<Text
-					preset="formLabel"
-					text={label}
-					tx={labelTx}
-					txOptions={labelTxOptions}
-					{...LabelTextProps}
-					style={$labelStyles}
-				/>
-			)}
-
-			<View style={$inputWrapperStyles}>
-				{!!LeftAccessory && (
-					<LeftAccessory
-						style={$leftAccessoryStyle}
-						status={status}
-						editable={!disabled}
-						multiline={TextInputProps.multiline ?? false}
+		<>
+			<TouchableOpacity
+				activeOpacity={1}
+				style={$containerStyles}
+				onPress={focusInput}
+				accessibilityState={{ disabled }}
+			>
+				{!!(label || labelTx) && (
+					<Text
+						text={label}
+						tx={labelTx}
+						txOptions={labelTxOptions}
+						{...LabelTextProps}
+						style={$labelStyles}
 					/>
 				)}
-
-				<TextInput
-					ref={input}
-					underlineColorAndroid={colors.transparent}
-					textAlignVertical="top"
-					placeholder={placeholderContent}
-					placeholderTextColor={colors.textDim}
-					{...TextInputProps}
-					editable={!disabled}
-					style={$inputStyles}
-				/>
-
-				{!!RightAccessory && (
-					<RightAccessory
-						style={$rightAccessoryStyle}
-						status={status}
+				<View style={$inputWrapperStyles}>
+					{!!LeftAccessory && (
+						<>
+							<LeftAccessory
+								style={styles.leftAccessory}
+								status={status}
+								editable={!disabled}
+								multiline={TextInputProps.multiline ?? false}
+							/>
+							<View style={styles.verticalSeparator} />
+						</>
+					)}
+					<TextInput
+						ref={input}
+						underlineColorAndroid={colors.transparent}
+						textAlignVertical="center"
+						placeholder={placeholderContent}
+						placeholderTextColor={colors.textDim}
+						{...TextInputProps}
 						editable={!disabled}
-						multiline={TextInputProps.multiline ?? false}
+						style={$inputStyles}
 					/>
-				)}
-			</View>
+					{!!RightAccessory && (
+						<>
+							<View style={styles.verticalSeparator} />
+							<RightAccessory
+								style={styles.rightAccessory}
+								status={status}
+								editable={!disabled}
+								multiline={TextInputProps.multiline ?? false}
+							/>
+						</>
+					)}
+				</View>
+
+			</TouchableOpacity>
 
 			{!!(helper || helperTx) && (
 				<Text
@@ -229,51 +168,69 @@ export const TextField = forwardRef(function TextField(props: TextFieldProps, re
 					style={$helperStyles}
 				/>
 			)}
-		</TouchableOpacity>
+		</>
+
 	)
 })
 
-const $labelStyle: TextStyle = {
-	marginBottom: spacing.xs,
-}
-
-const $inputWrapperStyle: ViewStyle = {
-	flexDirection: "row",
-	alignItems: "flex-start",
-	borderWidth: 1,
-	borderRadius: 12,
-	width: "100%",
-	borderColor: colors.text,
-	overflow: "hidden",
-}
-
-const $inputStyle: TextStyle = {
-	flex: 1,
-	alignSelf: "stretch",
-	fontFamily: typography.primary.normal,
-	color: colors.text,
-	fontSize: 16,
-	height: "fit-content",
-	paddingVertical: 0,
-	paddingHorizontal: 0,
-	marginVertical: 8,
-	marginHorizontal: 12,
-}
-
-
-const $helperStyle: TextStyle = {
-	marginTop: spacing.xs,
-}
-
-const $rightAccessoryStyle: ViewStyle = {
-	marginEnd: spacing.xs,
-	height: 40,
-	justifyContent: "center",
-	alignItems: "center",
-}
-const $leftAccessoryStyle: ViewStyle = {
-	marginStart: spacing.xs,
-	height: 40,
-	justifyContent: "center",
-	alignItems: "center",
-}
+const styles = StyleSheet.create({
+	container: {
+		marginBottom: spacing.md,
+		borderWidth: 1,
+		borderRadius: 12,
+		borderColor: '#e1e1e1',
+		backgroundColor: 'white',
+		paddingHorizontal: spacing.sm,
+		textAlign: 'right',
+	},
+	label: {
+		textAlign: "right",
+		backgroundColor: colors.transparent,
+		color: 'rgba(0,0,0,0.5)',
+		marginHorizontal: 6,
+		fontSize: 15,
+		fontFamily: 'Janna'
+	},
+	inputWrapper: {
+		flexDirection: "row",
+		alignItems: "center",
+		width: "100%",
+		overflow: "hidden",
+		paddingHorizontal: 4,
+		paddingVertical: 2
+	},
+	input: {
+		flex: 1,
+		alignSelf: "stretch",
+		fontFamily: "Janna",
+		color: 'rgba(0,0,0,0.5)',
+		fontSize: 16,
+		height: 15,
+		marginHorizontal: 1,
+		marginVertical: 5,
+	},
+	verticalSeparator: {
+		width: 2,
+		backgroundColor: '#dfdfdf',
+		height: '60%',
+		marginHorizontal: spacing.xs,
+	},
+	helper: {
+		fontFamily: "Janna",
+		fontSize: 12,
+		textAlign: 'right',
+		marginTop: spacing.xs,
+	},
+	rightAccessory: {
+		marginEnd: spacing.xs,
+		height: "100%",
+		justifyContent: "center",
+		alignItems: "center",
+	},
+	leftAccessory: {
+		marginStart: spacing.xs,
+		height: "100%",
+		justifyContent: "center",
+		alignItems: "center",
+	},
+})

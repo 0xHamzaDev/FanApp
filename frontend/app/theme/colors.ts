@@ -52,17 +52,24 @@ export const colors = {
 	 * The default text color in many components.
 	 */
 	// text: palette.neutral800,
-	text: "#FFFFFF",
+	text: "#36474f",
+	/**
+	* icon Color.
+	*/
+	icon: "#64748b",
+	/**
+	* Theme Color.
+	*/
+	themecolor: "#005b5c",
 	/**
 	 * Secondary text information.
 	 */
-	textDim: palette.neutral600,
+	textDim: "rgba(0, 0, 0, 0.5)",
 	/**
 	 * The default color of the screen background.
 	 */
-	mainBackground: palette.secondary100,
 	
-	background: "#074849",
+	background: "#f4f4f4",
 	/**
 	 * The default border color.
 	 */

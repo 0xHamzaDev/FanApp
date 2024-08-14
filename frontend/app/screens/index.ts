@@ -1,5 +1,4 @@
 // Authenticator Screens
-export * from "./WelcomeScreen"
 export * from "./SignupScreen"
 export * from "./LoginScreen"
 export * from "./VerificationScreen"

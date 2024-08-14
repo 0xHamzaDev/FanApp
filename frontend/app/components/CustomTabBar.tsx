@@ -3,6 +3,7 @@ import { View, TouchableOpacity, StyleSheet } from 'react-native';
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Text } from './Text'
+import { spacing, colors } from '../theme';
 
 export const CustomTabBar: React.FC<BottomTabBarProps> = ({
 	state,
@@ -38,8 +39,15 @@ export const CustomTabBar: React.FC<BottomTabBarProps> = ({
 						onPress={onPress}
 						style={styles.tab}
 					>
-						<Ionicons name={options.tabBarLabel + '-outline'} color={isFocused ? 'tomato' : 'gray'} size={26} />
-						<Text text={options.title} style={[styles.text, { color: isFocused ? 'tomato' : 'gray' }]} />
+						<Ionicons
+							name={isFocused ? options.tabBarLabel : options.tabBarLabel + '-outline'}
+							color={isFocused ? 'tomato' : 'gray'} 
+							size={26}
+						/>
+						<Text
+							text={options.title}
+							style={[styles.text, { color: isFocused ? 'tomato' : 'gray' }]}
+						/>
 					</TouchableOpacity>
 				);
 			})}
@@ -58,8 +66,8 @@ const styles = StyleSheet.create({
 		borderTopWidth: 1,
 		borderTopColor: '#eee',
 		backgroundColor: '#fff',
-		borderTopLeftRadius: 15,
-		borderTopRightRadius: 15,
+		borderTopLeftRadius: 20,
+		borderTopRightRadius: 20,
 	},
 	tab: {
 		flex: 1,
@@ -67,6 +75,7 @@ const styles = StyleSheet.create({
 		justifyContent: 'center',
 	},
 	text: {
-		fontSize: 14
+		fontSize: 14,
+		fontFamily: "Janna"
 	}
 });

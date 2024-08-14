@@ -29,7 +29,7 @@ import * as storage from "./utils/storage"
 import { customFontsToLoad, colors } from "./theme"
 import Config from "./config"
 import { GestureHandlerRootView } from "react-native-gesture-handler"
-import { ViewStyle } from "react-native"
+import { ViewStyle, I18nManager } from "react-native"
 import { AuthProvider } from "./context"
 
 export const NAVIGATION_PERSISTENCE_KEY = "NAVIGATION_STATE"
@@ -38,7 +38,6 @@ export const NAVIGATION_PERSISTENCE_KEY = "NAVIGATION_STATE"
 const prefix = Linking.createURL("/")
 const config = {
 	screens: {
-		Welcome: 'Welcome',
 		Signup: 'Signup',
 		Login: {
 			path: "",

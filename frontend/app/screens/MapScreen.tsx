@@ -1,75 +1,67 @@
 import React, { FC, useEffect, useState } from "react";
-import { View, StyleSheet, Text, Platform } from "react-native";
+import { View, StyleSheet, SafeAreaView, KeyboardAvoidingView, Platform } from 'react-native';
 import { observer } from "mobx-react-lite";
-import MapboxGL from '@rnmapbox/maps';
 import * as Location from 'expo-location';
 import { Screen } from "../components";
 import { AppStackScreenProps } from "../navigators";
-import { colors, spacing } from "../theme";
-
-MapboxGL.setAccessToken("sk.eyJ1IjoiaGFtemFhbHNoZXJpZiIsImEiOiJjbHprc2xiaTcxNjh5MmtzaTN3eTBnaW91In0.tlLesVUSxEZeSoHbh_vEqw");
+import { colors } from "../theme";
+import MapView, { Marker, Region, Circle } from 'react-native-maps';
 
 interface MapScreenProps extends AppStackScreenProps<"Map"> { }
 
 export const MapScreen: FC<MapScreenProps> = observer(function MapScreen({ navigation }) {
-	const [locationGranted, setLocationGranted] = useState(false);
-	const [initialRegion, setInitialRegion] = useState({
-		latitude: 37.78825,
-		longitude: -122.4324,
-	});
+	const [location, setLocation] = useState<Location.LocationObject | null>(null);
+	const [region, setRegion] = useState<Region | null>(null);
 
 	useEffect(() => {
-		const getLocationPermission = async () => {
-			let { status } = await Location.requestForegroundPermissionsAsync();
-			if (status === 'granted') {
-				setLocationGranted(true);
-				let location = await Location.getCurrentPositionAsync({});
-				setInitialRegion({
-					latitude: location.coords.latitude,
-					longitude: location.coords.longitude,
-				});
-			} else {
-				setLocationGranted(false);
-			}
-		};
-
-		getLocationPermission();
+		requestLocationPermission();
 	}, []);
 
-	const markers = [
-		{ id: 1, title: 'نقطة 1', description: 'وصف النقطة 1', latitude: 37.78825, longitude: -122.4324 },
-		{ id: 2, title: 'نقطة 2', description: 'وصف النقطة 2', latitude: 37.75825, longitude: -122.4624 },
-		{ id: 3, title: 'نقطة 3', description: 'وصف النقطة 3', latitude: 37.76825, longitude: -122.4824 },
-	];
+	async function requestLocationPermission() {
+		let { status } = await Location.requestForegroundPermissionsAsync();
+		if (status !== 'granted') {
+			console.log('Permission to access location was denied');
+			return;
+		}
+
+		let location = await Location.getCurrentPositionAsync({});
+		setLocation(location);
+		setRegion({
+			latitude: location.coords.latitude,
+			longitude: location.coords.longitude,
+			latitudeDelta: 0.005,
+			longitudeDelta: 0.005,
+		});
+	}
 
 	return (
-		<Screen preset="auto" style={{ flex: 1, backgroundColor: colors.mainBackground }} safeAreaEdges={["top"]}>
-			<View style={styles.container}>
-				{locationGranted ? (
-					<MapboxGL.MapView style={styles.map}>
-						<MapboxGL.Camera
-							zoomLevel={8}
-							centerCoordinate={[initialRegion.longitude, initialRegion.latitude]}
-						/>
-						{markers.map(marker => (
-							<MapboxGL.PointAnnotation
-								key={marker.id}
-								id={String(marker.id)}
-								coordinate={[marker.longitude, marker.latitude]}
-							>
-								<MapboxGL.Callout title={marker.title}>
-									<View style={styles.callout}>
-										<Text>{marker.description}</Text>
-									</View>
-								</MapboxGL.Callout>
-							</MapboxGL.PointAnnotation>
-						))}
-					</MapboxGL.MapView>
-				) : (
-					<Text style={styles.permissionText}>Permission to access location was denied</Text>
-				)}
-			</View>
-		</Screen>
+		<View style={{ flex: 1, backgroundColor: colors.background }} >
+			<KeyboardAvoidingView
+				behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+				style={{ flex: 1 }}
+			>
+				<View style={styles.container}>
+					<MapView
+						style={styles.map}
+						region={region}
+						showsUserLocation={true}
+						loadingEnabled={true}
+					>
+						{location && (
+							<Circle
+								center={{
+									latitude: location.coords.latitude + 0.001,
+									longitude: location.coords.longitude,
+								}}
+								radius={40}
+								strokeColor="rgba(0, 150, 255, 0.5)"
+								fillColor="rgba(0, 150, 255, 0.3)"
+							/>
+						)}
+					</MapView>
+				</View>
+			</KeyboardAvoidingView>
+		</View>
 	);
 });
 
@@ -80,15 +72,7 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 	},
 	map: {
-		...StyleSheet.absoluteFillObject,
-	},
-	permissionText: {
-		color: 'red',
-		fontSize: 16,
-	},
-	callout: {
-		padding: 8,
-		backgroundColor: 'white',
-		borderRadius: 4,
+		width: '100%',
+		height: '100%',
 	},
 });

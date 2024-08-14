@@ -66,14 +66,6 @@
 				}
 			],
 			[
-				"@rnmapbox/maps",
-				{
-					"RNMapboxMapsVersion": "11.0.0",
-					"RNMapboxMapsDownloadToken": "sk.eyJ1IjoiaGFtemFhbHNoZXJpZiIsImEiOiJjbHprc2xiaTcxNjh5MmtzaTN3eTBnaW91In0.tlLesVUSxEZeSoHbh_vEqw",
-					"RNMapboxMapsAccessToken": "sk.eyJ1IjoiaGFtemFhbHNoZXJpZiIsImEiOiJjbHprc2xiaTcxNjh5MmtzaTN3eTBnaW91In0.tlLesVUSxEZeSoHbh_vEqw"
-				}
-			],
-			[
 				"expo-build-properties",
 				{
 					"ios": {
