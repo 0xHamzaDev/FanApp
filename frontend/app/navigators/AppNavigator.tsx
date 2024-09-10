@@ -4,16 +4,16 @@ import {
 	DefaultTheme,
 	NavigationContainer,
 } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { createNativeStackNavigator, NativeStackScreenProps } from "@react-navigation/native-stack";
 import { observer } from "mobx-react-lite";
 import React from "react";
 import { useColorScheme } from "react-native";
-import * as Screens from "../screens";
-import Config from "../config";
-import { useAuth } from "../context";
+import * as Screens from "@screens";
+import Config from "@config";
+import { useAuth } from "@context";
 import { AppNavigationBar, AppNavigationBarParamList } from "./AppNavigatorBar";
 import { navigationRef, useBackButtonHandler } from "./navigationUtilities";
-import { colors } from "../theme";
+import { colors } from "@theme";
 
 export type AppStackParamList = {
 	// Auth Navigator
@@ -26,7 +26,13 @@ export type AppStackParamList = {
 	Profile: undefined;
 	Notifications: undefined;
 	Settings: undefined;
+	Admins: undefined;
 };
+
+export type AppStackScreenProps<T extends keyof AppStackParamList> = NativeStackScreenProps<
+  AppStackParamList,
+  T
+>
 
 const exitRoutes = Config.exitRoutes;
 
@@ -79,11 +85,11 @@ export const AppNavigator = observer(function AppNavigator(props) {
 			theme={colorScheme === "dark" ? DarkTheme : DefaultTheme}
 			{...props}
 		>
-			{isAuthenticated ? (
+			{/* {isAuthenticated ? ( */}
 				<MainNavigator />
-			) : (
-				<AuthNavigator />
-			)}
+			{/* ) : ( */}
+				{/* <AuthNavigator /> */}
+			{/* )} */}
 		</NavigationContainer>
 	);
 });

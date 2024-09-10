@@ -10,7 +10,7 @@ function IgniteApp() {
 	const [rtlEnforced, setRtlEnforced] = useState(false);
 
 	useEffect(() => {
-		if (!rtlEnforced  && I18nManager.isRTL === false) {
+		if (!rtlEnforced && I18nManager.isRTL === false) {
 			I18nManager.allowRTL(true);
 			I18nManager.forceRTL(true);
 			setRtlEnforced(true);

@@ -1,9 +1,21 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { Alert } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { signUp, signIn, verifyOTP } from '../services/api/authService';
+import { signUp, signIn, verifyOTP } from '@services/api/authService';
 
 const AuthContext = createContext(null);
+
+export const getUserSession = async () => {
+    try {
+        const sessionString = await AsyncStorage.getItem('authSession');
+        if (sessionString) {
+            const session = JSON.parse(sessionString);
+            return session
+        }
+    } catch (error) {
+        return null;
+    }
+}
 
 export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);

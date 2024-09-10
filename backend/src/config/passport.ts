@@ -1,4 +1,4 @@
-import { PassportStatic } from "passport";
+import passport from 'passport';
 import { Strategy as JwtStrategy, ExtractJwt, StrategyOptions } from "passport-jwt";
 import User, { IUser } from "../models/User";
 import dotenv from 'dotenv';
@@ -17,18 +17,16 @@ const options: StrategyOptions = {
     secretOrKey: jwtSecret,
 };
 
-export default (passport: PassportStatic) => {
-    passport.use(
-        new JwtStrategy(options, async (payload: any, done: any) => {
-            try {
-                const user: IUser | null = await User.findById(payload.userId);
-                if (user) {
-                    return done(null, user);
-                }
-                return done(null, false);
-            } catch (error) {
-                return done(error, false);
+passport.use(
+    new JwtStrategy(options, async (payload: any, done: any) => {
+        try {
+            const user: IUser | null = await User.findById(payload.userId);
+            if (user) {
+                return done(null, user);
             }
-        })
-    );
-};
+            return done(null, false);
+        } catch (error) {
+            return done(error, false);
+        }
+    })
+);

@@ -5,9 +5,9 @@ import morgan from "morgan";
 import helmet from "helmet";
 import dotenv from 'dotenv';
 import passport from "passport";
-import passportConfig from "./middleware/passport";
 import userRoutes from "./routes/userRoutes";
 import authRoutes from "./routes/authRoutes";
+import './config/passport';
 
 dotenv.config();
 
@@ -29,15 +29,13 @@ App.use(cors({
 App.use(helmet());
 App.use(morgan("dev"));
 App.use(express.json());
-
 App.use(passport.initialize());
-passportConfig(passport);
 
 App.use("/api/authentication", authRoutes);
 App.use("/api/user", userRoutes);
 
-App.get("/", (req: Request, res: Response) => {
-	res.status(200).json({ message: "API :)" });
-});
+App.use("*", (req: Request, res: Response) => {
+	res.status(404).json({ error: "Page not found" });
+})
 
 export default App;

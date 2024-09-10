@@ -1,10 +1,11 @@
 import { observer } from "mobx-react-lite";
 import React, { FC, useState } from "react";
 import { View, StyleSheet, TouchableOpacity } from "react-native";
-import { Screen, Text, GoBackButton, CustomDialog } from "../components";
-import { AppStackScreenProps } from "../navigators";
-import { colors, spacing } from "../theme";
+import { Screen, Text, GoBackButton, CustomDialog } from "@components";
+import { AppStackScreenProps } from "@navigators";
+import { colors, spacing } from "@theme";
 import { Switch } from 'react-native-paper';
+import { useAuth } from '@context'
 import Ionicons from "react-native-vector-icons/Ionicons";
 
 // Pages to be rendered for each option
@@ -50,13 +51,16 @@ export const SettingsScreen: FC<SettingsScreenProps> = observer(function Setting
 	const [activePage, setActivePage] = useState('main');
 	const [notificationSwitch, changeNotificationSwitch] = useState(true);
 	const [dialogVisible, setDialogVisible] = useState(false);
+	const { signOut } = useAuth();
 
 	const notificationHandler = () => {
 		changeNotificationSwitch(!notificationSwitch);
 	}
 
-	const handleDialogClose = () => {
+	const handleLogout = async () => {
 		setDialogVisible(false);
+		await signOut();
+		navigation.navigate('Login');
 	};
 
 	const settingsOptions = [
@@ -136,8 +140,8 @@ export const SettingsScreen: FC<SettingsScreenProps> = observer(function Setting
 				title={'تسجيل خروج'}
 				description={'هل أنت متأكد أنك تريد تسجيل الخروج؟'}
 				visible={dialogVisible}
-				onAllow={handleDialogClose}
-				onDeny={handleDialogClose}
+				onAllow={handleLogout}
+				onDeny={() => setDialogVisible(false)}
 			/>
 		</Screen>
 	);

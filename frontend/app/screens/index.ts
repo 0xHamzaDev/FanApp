@@ -1,11 +1,17 @@
 // Authenticator Screens
-export * from "./SignupScreen"
-export * from "./LoginScreen"
-export * from "./VerificationScreen"
+export * from "./authentication/signup";
+export * from "./authentication/login";
+export * from "./authentication/verification";
+
 // App Screens
-export * from "./HomeScreen"
-export * from "./SettingsScreen"
-export * from "./MapScreen"
-export * from "./NotificationsScreen"
-export * from "./ProfileScreen"
-export * from "./ErrorScreen/ErrorBoundary"
+export * from "./home/main";
+export * from "./settings";
+export * from "./map";
+export * from "./notifications";
+export * from "./profile";
+export * from "./error/ErrorBoundary";
+
+// Sub Screens
+export * from "./home/admins";
+export * from "./home/tickets";
+export * from "./home/tickets/details";

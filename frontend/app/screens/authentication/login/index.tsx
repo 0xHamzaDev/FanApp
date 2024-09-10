@@ -1,12 +1,12 @@
 import React, { FC, useState } from "react";
 import { View, Alert, StyleSheet, TouchableOpacity } from "react-native";
-import { Text, Button, Screen, TextField } from "../components";
-import { AppStackScreenProps } from "../navigators";
-import { useAuth } from "../context";
-import { spacing, colors } from "../theme";
+import { Text, Button, Screen, TextField } from "@components";
+import { AppStackScreenProps } from "@navigators";
+import { useAuth } from "@context";
+import { spacing, colors } from "@theme";
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { formatPhoneNumber } from "../utils/formatNumber";
-import { checkUser } from "../services/api/authService";
+import { formatPhoneNumber } from "@utils/formatNumber";
+import { checkUser } from "@services/api/authService";
 
 interface LoginScreenProps extends AppStackScreenProps<"Login"> { }
 
@@ -28,7 +28,7 @@ export const LoginScreen: FC<LoginScreenProps> = function LoginScreen({ navigati
 			try {
 				const formattedPhoneNumber = formatPhoneNumber(phoneNumber);
 
-                const data = await checkUser(formattedPhoneNumber);
+				const data = await checkUser(formattedPhoneNumber);
 				console.log(data)
 				if (!data) return Alert.alert("خطا", "هذا الرقم غير مسجل")
 

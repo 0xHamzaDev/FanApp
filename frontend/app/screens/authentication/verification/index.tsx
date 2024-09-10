@@ -1,10 +1,10 @@
 import { observer } from "mobx-react-lite";
 import React, { FC, useState, useEffect } from "react";
 import { View, Alert, Keyboard, TouchableOpacity, StyleSheet } from "react-native";
-import { Text, Button, Screen } from "../components";
-import { AppStackScreenProps } from "../navigators";
-import { colors, spacing } from "../theme";
-import { useAuth } from "../context";
+import { Text, Button, Screen } from "@components";
+import { AppStackScreenProps } from "@navigators";
+import { colors, spacing } from "@theme";
+import { useAuth } from "@context";
 import { OtpInput } from "react-native-otp-entry";
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
@@ -75,7 +75,7 @@ export const VerificationScreen: FC<VerificationScreenProps> = observer(function
 					focusColor="#005550"
 					focusStickBlinkingDuration={400}
 					onTextChange={(text) => setOtp(text)}
-					onFilled={handleVerification}
+					onFilled={() => Keyboard.dismiss() }
 					textInputProps={{
 						accessibilityLabel: "One-Time Password",
 					}}

@@ -1,9 +1,9 @@
 import { observer } from "mobx-react-lite";
 import React, { FC } from "react";
 import { View, StyleSheet, Image, TouchableOpacity } from "react-native";
-import { Screen, Button, Text } from "../components";
-import { AppStackScreenProps } from "../navigators";
-import { colors, spacing } from "../theme";
+import { Screen, Button, Text } from "@components";
+import { AppStackScreenProps } from "@navigators";
+import { colors, spacing } from "@theme";
 import Icon from "react-native-vector-icons/MaterialIcons";
 
 
@@ -60,10 +60,10 @@ const styles = StyleSheet.create({
 		color: colors.themecolor,
 		fontFamily: 'JannaBold',
 		fontSize: 45,
-		lineHeight: 50,
+		lineHeight: 60,
 		marginBottom: spacing.sm,
 		paddingHorizontal: spacing.md,
-		paddingTop: 35,
+		paddingTop: 25,
 		textAlign: 'right',
 	},
 	profileContainer: {

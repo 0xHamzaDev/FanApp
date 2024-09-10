@@ -32,7 +32,6 @@ const registerUser = async (req: Request, res: Response): Promise<void> => {
         const hashedPassword = await bcrypt.hash(password, 12);
         const newUser: IUser = new User({ name, password: hashedPassword, phone });
         const savedUser: IUser = await newUser.save();
-        const a = generateToken(savedUser._id.toString(), phone);
 
         res.status(201).json({ 
             id: savedUser._id.toString(),
@@ -64,7 +63,7 @@ const loginUser = async (req: Request, res: Response): Promise<void> => {
 
 const verifyOtp = async (req: Request, res: Response): Promise<void> => {
     const { phone, otp } = req.body;
-
+    console.log(phone, otp)
     try {
         const verificationCheck = await checkOtp(phone, otp);
         if (verificationCheck?.status !== 'approved') {
@@ -88,13 +87,14 @@ const verifyOtp = async (req: Request, res: Response): Promise<void> => {
             }
         });
     } catch (error) {
+        console.log(error)
         console.error("Error during OTP verification:", error);
         errorHandler(res, error);
     }
 };
 
 function generateToken(userId: string, phone: string): string {
-    return jwt.sign({ userId, phone }, jwtSecret, { expiresIn: "1h" });
+    return jwt.sign({ userId, phone }, jwtSecret, { expiresIn: "1y" });
 }
 
 async function sendOtp(phone: string) {

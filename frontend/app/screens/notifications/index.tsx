@@ -1,54 +1,54 @@
 import { observer } from "mobx-react-lite"
 import React, { FC } from "react";
 import { View, StyleSheet, ScrollView, Image } from 'react-native';
-import { Screen, Text, Notification } from "../components";
-import { AppStackScreenProps } from "../navigators";
-import { colors, spacing } from "../theme";
+import { Screen, Text, Notification } from "@components";
+import { AppStackScreenProps } from "@navigators";
+import { colors, spacing } from "@theme";
 
 interface NotificationsScreenProps extends AppStackScreenProps<"Notfications"> { }
 
 export const NotificationsScreen: FC<NotificationsScreenProps> = observer(function NotificationsScreen({ navigation }) {
-	const notificationsData = []
-	// const notificationsData = [
-	// 	{
-	// 		title: "ملفك الشخصي غير مكتمل يرجي استكمال ملء البيانات حتي تتمكن من الأستفادة من التطبيق بشكل فعال!.",
-	// 		icon: 'error',
-	// 		time: "قبل ساعة"
-	// 	},
-	// 	{
-	// 		title: "تم قبول طلبك بنجاح إذهب إلى صفحة تيشرتات بالصفحة الرئيسية",
-	// 		icon: 'info',
-	// 		time: "قبل ساعة"
-	// 	},
-	// 	{
-	// 		title: "تم قبول طلبك بنجاح إذهب إلى صفحة تيشرتات بالصفحة الرئيسية",
-	// 		icon: 'info',
-	// 		time: "قبل ساعة"
-	// 	},
-	// 	{
-	// 		title: "تم قبول طلبك بنجاح إذهب إلى صفحة تيشرتات بالصفحة الرئيسية",
-	// 		icon: 'info',
-	// 		time: "قبل ساعة"
-	// 	},
-	// 	{
-	// 		title: "تم قبول طلبك بنجاح إذهب إلى صفحة تيشرتات بالصفحة الرئيسية",
-	// 		icon: 'info',
-	// 		time: "قبل ساعة"
-	// 	},
-	// 	{
-	// 		title: "تم قبول طلبك بنجاح إذهب إلى صفحة تيشرتات بالصفحة الرئيسية",
-	// 		icon: 'info',
-	// 		time: "قبل ساعة"
-	// 	},
-	// ];
+	// const notificationsData = []
+	const notificationsData = [
+		{
+			title: "ملفك الشخصي غير مكتمل يرجي استكمال ملء البيانات حتي تتمكن من الأستفادة من التطبيق بشكل فعال!.",
+			icon: 'error',
+			time: "قبل ساعة"
+		},
+		{
+			title: "تم قبول طلبك بنجاح إذهب إلى صفحة تيشرتات بالصفحة الرئيسية",
+			icon: 'info',
+			time: "قبل ساعة"
+		},
+		{
+			title: "تم قبول طلبك بنجاح إذهب إلى صفحة تيشرتات بالصفحة الرئيسية",
+			icon: 'info',
+			time: "قبل ساعة"
+		},
+		{
+			title: "تم قبول طلبك بنجاح إذهب إلى صفحة تيشرتات بالصفحة الرئيسية",
+			icon: 'info',
+			time: "قبل ساعة"
+		},
+		{
+			title: "تم قبول طلبك بنجاح إذهب إلى صفحة تيشرتات بالصفحة الرئيسية",
+			icon: 'info',
+			time: "قبل ساعة"
+		},
+		{
+			title: "تم قبول طلبك بنجاح إذهب إلى صفحة تيشرتات بالصفحة الرئيسية",
+			icon: 'info',
+			time: "قبل ساعة"
+		},
+	];
 
 	return (
 		<Screen preset="auto" style={styles.screen} backgroundColor={colors.background} safeAreaEdges={["top"]}>
 			<Text style={styles.header} text={'الإشعارات'} />
-			<ScrollView contentContainerStyle={styles.container}>
+			<ScrollView contentContainerStyle={styles.container} scrollEnabled={notificationsData.length === 0 ? false : true}>
 				{notificationsData.length === 0 && (
 					<View style={styles.emptyContainer}>
-						<Image source={require('../../assets/images/app-icon-all.png')} style={styles.image} />
+						<Image source={require('@assets/images/nonotfications.png')} style={styles.image} />
 						<Text style={styles.headerText}>لا توجد إشعارات حتى اللحظة</Text>
 						<Text style={styles.descriptionText}>ستظهر إشعاراتك هنا.</Text>
 					</View>
@@ -90,9 +90,9 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 	},
 	image: {
-		width: 250,
-		height: 250,
-		marginBottom: 46,
+		width: 300,
+		height: 300,
+		marginVertical: 46,
 	},
 	headerText: {
 		fontSize: 22,

@@ -5,6 +5,7 @@ interface IUser extends Document {
     phone: string;
     password: string;
     isActivated: boolean;
+    isNotficationEnabled: boolean;
     _id: Types.ObjectId;
 }
 
@@ -13,6 +14,7 @@ const userSchema: Schema<IUser> = new mongoose.Schema({
     password: { type: String, required: true },
     phone: { type: String, unique: true, required: true },
     isActivated: { type: Boolean, default: false },
+    isNotficationEnabled: { type: Boolean, default: false },
 }, {
     timestamps: true,
 });

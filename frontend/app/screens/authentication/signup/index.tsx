@@ -1,12 +1,12 @@
 import React, { FC, useState } from "react";
 import { View, Alert, StyleSheet, TouchableOpacity } from "react-native";
-import { Text, Button, Screen, TextField } from "../components";
-import { AppStackScreenProps } from "../navigators";
-import { useAuth } from "../context";
+import { Text, Button, Screen, TextField } from "@components";
+import { AppStackScreenProps } from "@navigators";
+import { useAuth } from "@context";
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { formatPhoneNumber } from "../utils/formatNumber";
-import { signUp } from "../services/api/authService";  // Import the signup function from authService
-import { spacing, colors } from "../theme";
+import { formatPhoneNumber } from "@utils/formatNumber";
+import { signUp } from "@services/api/authService";  // Import the signup function from authService
+import { spacing, colors } from "@theme";
 
 interface SignupScreenProps extends AppStackScreenProps<"Signup"> { }
 
@@ -28,24 +28,28 @@ export const SignupScreen: FC<SignupScreenProps> = function SignupScreen({ navig
 
     const handleSignup = async () => {
         setIsSubmitted(true);
-
+    
         if (nameError || phoneError || passwordError) {
             return;
         }
-
+    
         try {
             const formattedPhoneNumber = formatPhoneNumber(phoneNumber);
             const data = await signUp(name, password, formattedPhoneNumber);
-
+    
             if (data.status === 'success') {
                 Alert.alert("إنشاء الحساب", "تم إنشاء الحساب بنجاح !", [
                     { text: "حسناً", onPress: () => navigation.navigate('Login') }
                 ]);
             }
         } catch (error) {
-            Alert.alert("حدث خطأ", '.حدث خطأ في التسجيل حاول مجدداً');
+            if (error.error === 'User already exists') {
+                Alert.alert("حدث خطأ", ' المستخدم موجود بالفعل.');
+            } else {
+                Alert.alert("حدث خطأ", 'حدث خطأ في التسجيل. حاول مجدداً.');
+            }
         }
-    };
+    };    
 
     return (
         <Screen preset="auto" style={styles.screen} safeAreaEdges={["top", "bottom"]}>
@@ -199,7 +203,7 @@ const styles = StyleSheet.create({
         fontFamily: 'JannaMed',
     },
     button: {
-        marginTop: '25%',
+        marginTop: spacing.md,
         width: '95%',
         backgroundColor: '#A00000',
         paddingVertical: spacing.md,
